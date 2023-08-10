@@ -15,6 +15,14 @@ func createDir(path string) {
 func main() {
 	var dirs []string
 
+	if len(os.Args[1:]) == 0 {
+		// TODO: Create a help menu
+		help := "Usage: [+<folder>] [-] [filename]"
+
+		fmt.Println(help)
+		return
+	}
+
 	for _, name := range os.Args[1:] {
 		switch []rune(name)[0] {
 		case '+':
@@ -28,9 +36,7 @@ func main() {
 			}
 			break
 		default:
-			combinedArray := append([]string{}, dirs...)
-			combinedArray = append(combinedArray, name)
-			curPath := path.Join(combinedArray...)
+			curPath := path.Join(append(dirs, name)...)
 
 			if _, err := os.Stat(curPath); err == nil {
 				fmt.Printf("path already exists: %s\n", curPath)
