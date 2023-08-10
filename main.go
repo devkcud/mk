@@ -7,24 +7,18 @@ import (
 )
 
 func main() {
-	args := os.Args[1:]
-
-	for _, name := range args {
+	for _, name := range os.Args[1:] {
 		if strings.HasPrefix(name, "-") {
-			if err := os.MkdirAll(name[1:], 0755); err != nil {
+			if os.MkdirAll(name[1:], 0755) != nil {
 				fmt.Printf("couldn't create folder: %s\n", name[1:])
 			}
 			continue
 		}
 
-		if _, err := os.ReadFile(name); err == nil {
+		if _, err := os.Stat(name); err == nil {
 			fmt.Printf("file already exists: %s\n", name)
-			continue
-		}
-
-		if err := os.WriteFile(name, []byte{}, 0644); err != nil {
+		} else if os.WriteFile(name, []byte{}, 0644) != nil {
 			fmt.Printf("couldn't create folder: %s\n", name)
 		}
 	}
-
 }
