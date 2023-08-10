@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"os"
 	"path"
+	"strings"
 )
 
 func createDir(path string) {
@@ -20,9 +21,9 @@ func main() {
 
 Usage: mk [+<folder>] [-] [filename]
 
-> +<folder> : Create a new directory and add it to the directory stack.
-> -         : Remove the last added directory from the directory stack.
-> filename  : Create an empty file with the specified name.
++<folder> : Create a new directory and add it to the directory stack.
+-         : Remove the last added directory from the directory stack.
+filename  : Create an empty file with the specified name.
 
 Issues/PRs/Help: https://github.com/devkcud/mk`)
 		return
@@ -35,9 +36,14 @@ Issues/PRs/Help: https://github.com/devkcud/mk`)
 			createDir(path.Join(dirs...))
 			break
 		case '-':
-			if len(dirs) > 0 {
-				dirs = dirs[:len(dirs)-1]
+			count := strings.Count(name, "-")
+
+			if count > len(dirs) {
+				dirs = nil
+				break
 			}
+
+			dirs = dirs[:len(dirs)-count]
 			break
 		default:
 			curPath := path.Join(append(dirs, name)...)
