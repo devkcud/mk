@@ -16,10 +16,15 @@ func main() {
 	var dirs []string
 
 	if len(os.Args[1:]) == 0 {
-		// TODO: Create a help menu
-		help := "Usage: [+<folder>] [-] [filename]"
+		fmt.Println(`mk: Simply make files/folders
 
-		fmt.Println(help)
+Usage: mk [+<folder>] [-] [filename]
+
+> +<folder> : Create a new directory and add it to the directory stack.
+> -         : Remove the last added directory from the directory stack.
+> filename  : Create an empty file with the specified name.
+
+Issues/PRs/Help: https://github.com/devkcud/mk`)
 		return
 	}
 
@@ -28,7 +33,6 @@ func main() {
 		case '+':
 			dirs = append(dirs, name[1:])
 			createDir(path.Join(dirs...))
-
 			break
 		case '-':
 			if len(dirs) > 0 {
