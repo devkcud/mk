@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"os"
+	"path"
 )
 
 func createDir(path string) {
@@ -12,16 +13,29 @@ func createDir(path string) {
 }
 
 func main() {
+	var dirs []string
+
 	for _, name := range os.Args[1:] {
 		switch []rune(name)[0] {
-		case ':':
-			createDir(name[1:])
+		case '+':
+			dirs = append(dirs, name[1:])
+			createDir(path.Join(dirs...))
+
+			break
+		case '-':
+			if len(dirs) > 0 {
+				dirs = dirs[:len(dirs)-1]
+			}
 			break
 		default:
-			if _, err := os.Stat(name); err == nil {
-				fmt.Printf("file already exists: %s\n", name[1:])
-			} else if os.WriteFile(name, []byte{}, 0644) != nil {
-				fmt.Printf("couldn't create folder: %s\n", name[1:])
+			combinedArray := append([]string{}, dirs...)
+			combinedArray = append(combinedArray, name)
+			curPath := path.Join(combinedArray...)
+
+			if _, err := os.Stat(curPath); err == nil {
+				fmt.Printf("path already exists: %s\n", curPath)
+			} else if os.WriteFile(curPath, []byte{}, 0644) != nil {
+				fmt.Printf("couldn't create file: %s\n", curPath)
 			}
 			break
 		}
