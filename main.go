@@ -46,6 +46,10 @@ Issues/PRs/Help: https://github.com/devkcud/mk`)
 			dirs = dirs[:len(dirs)-count]
 			break
 		default:
+			if strings.HasPrefix(name, "#") { // So you can use "+" or "-" in file names
+				name = name[1:]
+			}
+
 			curPath := path.Join(append(dirs, name)...)
 
 			if _, err := os.Stat(curPath); err == nil {
