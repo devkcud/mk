@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"os"
+	"os/exec"
 	"path"
 	"strings"
 )
@@ -10,6 +11,18 @@ import (
 func createDir(path string) {
 	if os.MkdirAll(path, 0755) != nil {
 		fmt.Printf("couldn't create folder: %s\n", path)
+	}
+}
+
+func runCommand(path string, command string) {
+	run := exec.Command("sh", "-c", command)
+
+	if len(path) != 0 {
+		run = exec.Command("sh", "-c", fmt.Sprintf("cd %s && %s", path, command))
+	}
+
+	if run.Run() != nil {
+		fmt.Printf("couldn't not run: %s\n", strings.Join(run.Args, " "))
 	}
 }
 
@@ -44,6 +57,10 @@ Issues/PRs/Help: https://github.com/devkcud/mk`)
 			}
 
 			dirs = dirs[:len(dirs)-count]
+			break
+		case '%':
+			curPath := path.Join(dirs...)
+			runCommand(curPath, name[1:])
 			break
 		default:
 			if strings.HasPrefix(name, "#") { // So you can use "+" or "-" in file names
