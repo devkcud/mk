@@ -15,14 +15,14 @@ func createDir(path string) {
 }
 
 func runCommand(path string, command string) {
-	run := exec.Command("sh", "-c", command)
+	cmd := exec.Command("sh", "-c", command)
+	cmd.Dir = path
 
-	if len(path) != 0 {
-		run = exec.Command("sh", "-c", fmt.Sprintf("cd %s && %s", path, command))
-	}
+	cmd.Stdout = os.Stdout
+	cmd.Stderr = os.Stderr
 
-	if run.Run() != nil {
-		fmt.Printf("couldn't not run: %s\n", strings.Join(run.Args, " "))
+	if cmd.Run() != nil {
+		fmt.Printf("couldn't not run: %s\n", strings.Join(cmd.Args, " "))
 	}
 }
 
