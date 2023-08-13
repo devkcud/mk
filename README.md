@@ -14,13 +14,13 @@ a directory stack to facilitate creating nested directories and files.
 
 ## Usage
 
-`mk [+<folder>] [-] [%command] [filename]`
+`mk [+<folder>] [-] [%'<command>'] [filename]`
 
 - `+<folder>`: Create a new directory with the specified name and add it to the
   directory stack.
 - `-`: Remove the last added directory from the directory stack. (Tip: You can
   stack in a single argument e.g.: mk +project +go -- README.md)
-- `%command`: Run a command in the current path (relative to the directory stack)
+- `%'<command>'`: Run a command in the current path (relative to the directory stack)
 - `filename`: Create an empty file with the specified name. If directories are
   added to the directory stack, the file will be created within them. If the
   name starts with **+** or **-**, you can use **#**. [View example](#example)
