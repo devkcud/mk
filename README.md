@@ -14,17 +14,20 @@ a directory stack to facilitate creating nested directories and files.
 
 ## Usage
 
-`mk [+<folder>] [-] [filename]`
+`mk [+<folder>] [-] [%command] [filename]`
 
 - `+<folder>`: Create a new directory with the specified name and add it to the
   directory stack.
 - `-`: Remove the last added directory from the directory stack. (Tip: You can
   stack in a single argument e.g.: mk +project +go -- README.md)
+- `%command`: Run a command in the current path (relative to the directory stack)
 - `filename`: Create an empty file with the specified name. If directories are
   added to the directory stack, the file will be created within them. If the
   name starts with **+** or **-**, you can use **#**. [View example](#example)
 
 ## Example
+
+### Simple
 
 Folder structure:
 
@@ -63,6 +66,29 @@ mk
     README.md     | Created: example/files/projects/go/README.md
     --            | Stack: [example, files]
     output.txt    | Created: example/files/output.txt
+```
+
+### Running commands
+
+Folder structure:
+
+```txt
+example/
+├── go.mod
+└── main.go
+```
+
+To create it we use the following command:
+
+```sh
+mk +example %'go mod init example.com/example' main.go
+```
+
+```txt
+mk
+    +example                           | Stack: [example]
+    %'go mod init example.com/example' | Run command: "sh -c 'go mod init example.com/example'" at example/
+    main.go                            | Created: example/main.go
 ```
 
 ## License
