@@ -26,7 +26,7 @@ func main() {
 		switch []rune(name)[0] {
 		case '+':
 			dirs = append(dirs, name[1:])
-			utils.Mkdir(path.Join(dirs...))
+			utils.CreateDir(path.Join(dirs...))
 			break
 		case '-':
 			count := strings.Count(name, "-")
@@ -46,7 +46,7 @@ func main() {
 				name = name[1:]
 			}
 
-			utils.Mkfile(path.Join(append(dirs, name)...))
+			utils.CreateFile(path.Join(append(dirs, name)...))
 			break
 		}
 	}
