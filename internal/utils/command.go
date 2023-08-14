@@ -7,12 +7,6 @@ import (
 	"strings"
 )
 
-func Mkdir(path string) {
-	if os.MkdirAll(path, 0755) != nil {
-		fmt.Printf("couldn't create folder: %s\n", path)
-	}
-}
-
 func ExecCommand(path string, command string) {
 	cmd := exec.Command("sh", "-c", command)
 	cmd.Dir = path
