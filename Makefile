@@ -11,7 +11,7 @@ GOCLEAN=$(GOCMD) clean
 all: clean build
 
 build:
-	$(GOBUILD) -o $(BUILD_DIR)/$(COMPILE_NAME) -v ./cmd/mk
+	$(GOBUILD) -o $(BUILD_DIR)/$(COMPILE_NAME) -ldflags="-X 'main.Version=v$(BIN_VERSION)'" ./cmd/mk
 
 clean:
 	$(GOCLEAN)
