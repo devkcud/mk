@@ -12,6 +12,10 @@ a directory stack to facilitate creating nested directories and files.
 
 > Tested on Linux (idk if it works on Windows and Mac)
 
+## Building
+
+View [BUILD.md](BUILD.md)
+
 ## Usage
 
 `mk [+<folder>] [-] [%'<command>'] [filename]`
@@ -20,7 +24,8 @@ a directory stack to facilitate creating nested directories and files.
   directory stack.
 - `-`: Remove the last added directory from the directory stack. (Tip: You can
   stack in a single argument e.g.: mk +project +go -- README.md)
-- `%'<command>'`: Run a command in the current path (relative to the directory stack)
+- `%'<command>'`: Run a command in the current path (relative to the directory
+  stack)
 - `filename`: Create an empty file with the specified name. If directories are
   added to the directory stack, the file will be created within them. If the
   name starts with **+** or **-**, you can use **#**. [View example](#example)
