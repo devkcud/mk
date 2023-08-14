@@ -3,43 +3,18 @@ package main
 import (
 	"fmt"
 	"os"
-	"os/exec"
 	"path"
 	"strings"
+
+	"github.com/devkcud/mk/internal/help"
+	"github.com/devkcud/mk/internal/utils"
 )
-
-func createDir(path string) {
-	if os.MkdirAll(path, 0755) != nil {
-		fmt.Printf("couldn't create folder: %s\n", path)
-	}
-}
-
-func runCommand(path string, command string) {
-	cmd := exec.Command("sh", "-c", command)
-	cmd.Dir = path
-
-	cmd.Stdout = os.Stdout
-	cmd.Stderr = os.Stderr
-
-	if cmd.Run() != nil {
-		fmt.Printf("couldn't not run: %s\n", strings.Join(cmd.Args, " "))
-	}
-}
 
 func main() {
 	var dirs []string
 
-	if len(os.Args[1:]) == 0 {
-		fmt.Println(`mk: Simply make files/folders
-
-Usage: mk [+<folder>] [-] [%'<command>'] [filename]
-
-+<folder>    : Create a new directory and add it to the directory stack.
--            : Remove the last added directory from the directory stack.
-%'<command>' : Runs a command in the last folder in the directory stack.
-filename     : Create an empty file with the specified name.
-
-Issues/PRs/Help: https://github.com/devkcud/mk`)
+	if len(strings.Join(os.Args[1:], "")) == 0 {
+		help.ShowHelp(nil)
 		return
 	}
 
@@ -47,7 +22,7 @@ Issues/PRs/Help: https://github.com/devkcud/mk`)
 		switch []rune(name)[0] {
 		case '+':
 			dirs = append(dirs, name[1:])
-			createDir(path.Join(dirs...))
+			utils.Mkdir(path.Join(dirs...))
 			break
 		case '-':
 			count := strings.Count(name, "-")
@@ -60,7 +35,7 @@ Issues/PRs/Help: https://github.com/devkcud/mk`)
 			dirs = dirs[:len(dirs)-count]
 			break
 		case '%':
-			runCommand(path.Join(dirs...), name[1:])
+			utils.ExecCommand(path.Join(dirs...), name[1:])
 			break
 		default:
 			if strings.HasPrefix(name, "#") { // So you can use "+" or "-" in file names
