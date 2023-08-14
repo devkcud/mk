@@ -30,6 +30,14 @@ View [BUILD.md](BUILD.md)
   added to the directory stack, the file will be created within them. If the
   name starts with **+** or **-**, you can use **#**. [View example](#example)
 
+To disable output use:
+
+```sh
+MK_QUIET=true mk
+# or
+MK_QUIET=1 mk
+```
+
 ## Example
 
 ### Simple
