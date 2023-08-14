@@ -13,6 +13,11 @@ import (
 var Version string
 
 func main() {
+	if os.Getenv("QUIET") != "" {
+		os.Stdout = nil
+		os.Stderr = nil
+	}
+
 	fmt.Printf("mk (%s) - by: devkcud\n", Version)
 
 	var dirs []string
