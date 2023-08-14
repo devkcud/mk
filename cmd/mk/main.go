@@ -46,13 +46,7 @@ func main() {
 				name = name[1:]
 			}
 
-			curPath := path.Join(append(dirs, name)...)
-
-			if _, err := os.Stat(curPath); err == nil {
-				fmt.Printf("path already exists: %s\n", curPath)
-			} else if os.WriteFile(curPath, []byte{}, 0644) != nil {
-				fmt.Printf("couldn't create file: %s\n", curPath)
-			}
+			utils.Mkfile(path.Join(append(dirs, name)...))
 			break
 		}
 	}
