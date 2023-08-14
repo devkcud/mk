@@ -13,7 +13,7 @@ import (
 var Version string
 
 func main() {
-	fmt.Printf("mk %s\n", Version)
+	fmt.Printf("mk (%s) - by: devkcud\n", Version)
 
 	var dirs []string
 
