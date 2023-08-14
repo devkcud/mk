@@ -2,9 +2,7 @@ package help
 
 import "fmt"
 
-const HelpString = `mk: Simply make files/folders
-
-Usage: mk [+<folder>] [-] [%'<command>'] [filename]
+const HelpString = `Usage: mk [+<folder>] [-] [%'<command>'] [filename]
 
 +<folder>    : Create a new directory and add it to the directory stack.
 -            : Remove the last added directory from the directory stack.

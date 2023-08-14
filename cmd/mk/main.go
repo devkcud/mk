@@ -10,7 +10,11 @@ import (
 	"github.com/devkcud/mk/internal/utils"
 )
 
+var Version string
+
 func main() {
+	fmt.Printf("mk %s\n", Version)
+
 	var dirs []string
 
 	if len(strings.Join(os.Args[1:], "")) == 0 {
