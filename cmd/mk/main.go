@@ -56,4 +56,6 @@ func main() {
 			break
 		}
 	}
+
+	fmt.Println("Done")
 }
