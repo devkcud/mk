@@ -93,4 +93,4 @@ mk
 
 ## License
 
-i don't really care how you're using it :P as it is a simple cli tool
+[This project is under the The Unlicense license](LICENSE)
