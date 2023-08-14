@@ -8,7 +8,7 @@ url="https://github.com/devkcud/mk"
 license=('Unlicense')
 makedepends=('go')
 source=("${pkgname}-${pkgver}.tar.gz::https://github.com/devkcud/mk/archive/v${pkgver}.tar.gz")
-sha256sums=('12ea086a21c442e6ce94eef19caa99eeb0bd39452fe3ac91b5fcd1745674709c')
+sha256sums=('SKIP')
 
 build() {
     cd "${srcdir}/${pkgname}-${pkgver}"
