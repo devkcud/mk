@@ -13,7 +13,7 @@ import (
 var Version string
 
 func main() {
-	if os.Getenv("QUIET") != "" {
+	if os.Getenv("MK_QUIET") != "" {
 		os.Stdout = nil
 		os.Stderr = nil
 	}
