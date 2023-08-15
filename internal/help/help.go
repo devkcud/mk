@@ -13,7 +13,6 @@ Issues/PRs/Help: https://github.com/devkcud/mk`
 
 func ShowHelp(topic *string) {
 	// TODO: Add topic help (+; -; %; etc)
-
 	if topic == nil {
 		fmt.Println(HelpString)
 	}
