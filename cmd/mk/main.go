@@ -22,14 +22,8 @@ func main() {
 
 	var dirs []string
 
-	if len(strings.Join(os.Args[1:], "")) == 0 || strings.ToLower(os.Args[1]) == "." {
-		var show *string = nil
-
-		if len(os.Args) >= 3 {
-			show = &os.Args[2]
-		}
-
-		help.ShowHelp(show)
+	if len(strings.Join(os.Args[1:], "")) == 0 {
+		help.ShowHelp()
 		return
 	}
 
