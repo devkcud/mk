@@ -18,11 +18,11 @@ func main() {
 		os.Stderr = nil
 	}
 
-	fmt.Printf("mk (%s) - by: devkcud\n", Version)
-
 	var dirs []string
 
 	if len(strings.Join(os.Args[1:], "")) == 0 {
+		fmt.Printf("mk (%s) - by: devkcud\n", Version)
+
 		help.ShowHelp()
 		return
 	}
@@ -55,6 +55,4 @@ func main() {
 			break
 		}
 	}
-
-	fmt.Println("Done")
 }
