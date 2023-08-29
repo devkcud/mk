@@ -32,7 +32,8 @@ func main() {
 		case '+':
 			dirs = append(dirs, name[1:])
 			utils.CreateDir(path.Join(dirs...))
-			break
+		case '.':
+			utils.CreateDir(path.Join(append(dirs, name[1:])...))
 		case '-':
 			count := strings.Count(name, "-")
 
@@ -42,17 +43,14 @@ func main() {
 			}
 
 			dirs = dirs[:len(dirs)-count]
-			break
 		case '%':
 			utils.ExecCommand(path.Join(dirs...), name[1:])
-			break
 		default:
 			if strings.HasPrefix(name, "#") { // So you can use "+" or "-" in file names
 				name = name[1:]
 			}
 
 			utils.CreateFile(path.Join(append(dirs, name)...))
-			break
 		}
 	}
 }
