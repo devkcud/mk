@@ -66,19 +66,8 @@ mk +example .test{1..9}
 
 ```txt
 mk
-    +example      | Stack: [example]
-    tool.go       | Created: example/tool.go
-    README.md     | Created: example/README.md
-    +files        | Stack: [example, files]
-    +documents    | Stack: [example, files, documents]
-    #+page.svelte | Created: example/files/documents/+page.svelte
-    -             | Stack: [example, files]
-    +projects     | Stack: [example, files, projects]
-    +go           | Stack: [example, files, projects, go]
-    main.go       | Created: example/files/projects/go/main.go
-    README.md     | Created: example/files/projects/go/README.md
-    --            | Stack: [example, files]
-    output.txt    | Created: example/files/output.txt
+    +example    | Stack: [example]
+    .test{1..9} | Created: test1...9/; Stack: [example]
 ```
 
 ### Complex
