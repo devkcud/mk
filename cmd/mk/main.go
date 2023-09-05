@@ -45,9 +45,9 @@ func main() {
 			} else {
 				dirs = dirs[:len(dirs)-(dots)]
 			}
-        // TODO: Redo commands again
 		// case '%':
-		// 	utils.ExecCommand(path.Join(dirs...), name[1:])
+		// TODO: Redo commands again
+		// utils.ExecCommand(path.Join(dirs...), name[1:])
 		default:
 			utils.CreateFile(path.Join(append(dirs, strings.Replace(name, "#", "", 1))...))
 		}
