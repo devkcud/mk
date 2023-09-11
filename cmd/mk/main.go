@@ -28,7 +28,7 @@ func main() {
 	}
 
 	for _, name := range os.Args[1:] {
-		if name[0] == '.' && strings.TrimPrefix(name, ".") == "" {
+		if name[0] == '.' && strings.TrimLeft(name, ".") == "" {
 			dots := strings.Count(name, ".")
 
 			if dots > len(dirstack) {
