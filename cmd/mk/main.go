@@ -18,7 +18,7 @@ func main() {
 		os.Stderr = nil
 	}
 
-	var dirs []string
+	var dirstack []string
 
 	if len(strings.Join(os.Args[1:], "")) == 0 {
 		fmt.Printf("mk (%s) - by: devkcud\n", Version)
@@ -30,26 +30,26 @@ func main() {
 	for _, name := range os.Args[1:] {
 		switch []rune(name)[0] {
 		case ':':
-			utils.CreateDir(path.Join(append(dirs, name[1:])...))
+			utils.CreateDir(path.Join(append(dirstack, name[1:])...))
 		case '.':
 			dots := strings.Count(name, ".")
 
 			if strings.Replace(name, ".", "", -1) != "" {
-				dirs = append(dirs, name[1:])
-				utils.CreateDir(path.Join(dirs...))
+				dirstack = append(dirstack, name[1:])
+				utils.CreateDir(path.Join(dirstack...))
 				break
 			}
 
-			if dots > len(dirs) {
-				dirs = nil
+			if dots > len(dirstack) {
+				dirstack = nil
 			} else {
-				dirs = dirs[:len(dirs)-(dots)]
+				dirstack = dirstack[:len(dirstack)-(dots)]
 			}
 		// case '%':
 		// TODO: Redo commands again
-		// utils.ExecCommand(path.Join(dirs...), name[1:])
+		// utils.ExecCommand(path.Join(dirstack...), name[1:])
 		default:
-			utils.CreateFile(path.Join(append(dirs, strings.Replace(name, "#", "", 1))...))
+			utils.CreateFile(path.Join(append(dirstack, strings.Replace(name, "#", "", 1))...))
 		}
 	}
 }
