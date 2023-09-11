@@ -1,8 +1,8 @@
 package main
 
 import (
+	"flag"
 	"fmt"
-	"os"
 	"path"
 	"strings"
 
@@ -13,23 +13,21 @@ import (
 var Version string
 
 func main() {
-	if os.Getenv("MK_QUIET") != "" {
-		os.Stdout = nil
-		os.Stderr = nil
-	}
+	showHelp := flag.Bool("help", false, "Show help menu")
+	flag.Parse()
 
-	var dirstack []string
-
-	if len(strings.Join(os.Args[1:], "")) == 0 {
+	if *showHelp || flag.NArg() == 0 {
 		fmt.Printf("mk (%s) - by: devkcud\n", Version)
 
 		help.ShowHelp()
 		return
 	}
 
-	for _, name := range os.Args[1:] {
-		if name[0] == '.' && strings.TrimLeft(name, ".") == "" {
-			dots := strings.Count(name, ".")
+	var dirstack []string
+
+	for _, name := range flag.Args() {
+		if strings.Trim(name, ".") == "" {
+			dots := strings.Count(name, ".") - 1
 
 			if dots > len(dirstack) {
 				dirstack = nil
