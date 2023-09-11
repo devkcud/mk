@@ -3,6 +3,7 @@ package main
 import (
 	"flag"
 	"fmt"
+	"os"
 	"path"
 	"strings"
 
@@ -14,6 +15,7 @@ var Version string
 
 func main() {
 	showHelp := flag.Bool("help", false, "Show help menu")
+	quiet := flag.Bool("quiet", true, "Disable output")
 	flag.Parse()
 
 	if *showHelp || flag.NArg() == 0 {
@@ -21,6 +23,12 @@ func main() {
 
 		help.ShowHelp()
 		return
+	}
+
+	if *quiet {
+		// os.Stdin = nil
+		os.Stdout = nil
+		os.Stderr = nil
 	}
 
 	var dirstack []string
