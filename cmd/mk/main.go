@@ -36,12 +36,15 @@ func main() {
 			} else {
 				dirstack = dirstack[:len(dirstack)-dots]
 			}
+
+			continue
 		}
 
 		if name[len(name)-1] == '/' {
 			dirstack = append(dirstack, name)
 			utils.CreateDir(path.Join(dirstack...))
-			break
+
+			continue
 		}
 
 		dir, file := path.Split(name)
