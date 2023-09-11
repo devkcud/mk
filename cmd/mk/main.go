@@ -29,21 +29,18 @@ func main() {
 
 	for _, name := range os.Args[1:] {
 		switch []rune(name)[0] {
-		case ':':
-			utils.CreateDir(path.Join(append(dirstack, name[1:])...))
+		// NOTE: This ain't a good way of doing out-stack dirs
+		// case ':':
+		// 	utils.CreateDir(path.Join(append(dirstack, name[1:])...))
 		case '.':
 			dots := strings.Count(name, ".")
 
-			if strings.Replace(name, ".", "", -1) != "" {
-				dirstack = append(dirstack, name[1:])
-				utils.CreateDir(path.Join(dirstack...))
-				break
-			}
+			// TODO: Create files/folders that starts with `.`
 
 			if dots > len(dirstack) {
 				dirstack = nil
 			} else {
-				dirstack = dirstack[:len(dirstack)-(dots)]
+				dirstack = dirstack[:len(dirstack)-dots]
 			}
 		// case '%':
 		// TODO: Redo commands again
@@ -58,8 +55,7 @@ func main() {
 			dir, file := path.Split(name)
 
 			if dir != "" {
-				dirstack = append(dirstack, dir)
-				utils.CreateDir(path.Join(dirstack...))
+				utils.CreateDir(path.Join(append(dirstack, dir)...))
 			}
 
 			utils.CreateFile(path.Join(append(dirstack, file)...))
