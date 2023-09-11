@@ -18,59 +18,32 @@ View [BUILD.md](BUILD.md)
 
 ## Usage
 
-`mk [+<folder>] [.<folder>] [-] [%'<command>'] [filename]`
+`mk [-flags] [..] [folder/] [files...]`
 
-- `+<folder>`: Create a new directory with the specified name and add it to the
-  directory stack.
-- `.<folder>`: Create a new directory without adding it to the directory stack.
-- `-`: Remove the last added directory from the directory stack. (Tip: You can
-  stack in a single argument e.g.: mk +project +go -- README.md)
-- `%'<command>'`: Run a command in the current path (relative to the directory
-  stack)
-- `filename`: Create an empty file with the specified name. If directories are
-  added to the directory stack, the file will be created within them. If the
-  name starts with **+** or **-**, you can use **#**. [View example](#examples)
+- `-flags`: View mk -help for info
+- `..`: Returns the a directory in the stack.
+- `folder/`: Creates a directory and add it to the directory stack.
+- `files...`: Creates files inside the directory stack.
 
-To disable output use:
+## Example
 
-```sh
-MK_QUIET=true mk
-# or
-MK_QUIET=1 mk
-```
-
-## Examples
-
-### Simple
+### Example 1
 
 Folder structure:
 
 ```txt
 example/
-├── test1/[empty]
-├── test2/[empty]
-├── test3/[empty]
-├── test4/[empty]
-├── test5/[empty]
-├── test6/[empty]
-├── test7/[empty]
-├── test8/[empty]
-└── test9/[empty]
+└── docs/
+    └── myfile.txt
 ```
 
 To create it we use the following command:
 
 ```sh
-mk +example .test{1..9}
+mk example/docs/myfile.txt
 ```
 
-```txt
-mk
-    +example    | Stack: [example]
-    .test{1..9} | Created: test1...9/; Stack: [example]
-```
-
-### Complex
+### Example 2
 
 Folder structure:
 
@@ -91,47 +64,24 @@ example/
 To create it we use the following command:
 
 ```sh
-mk +example tool.go README.md +files +documents #+page.svelte - +projects +go main.go README.md -- output.txt
+mk example/ tool.go README.md files/ documents/ +page.svelte .. projects/ go/ main.go README.md ... output.txt
 ```
 
 ```txt
 mk
-    +example      | Stack: [example]
-    tool.go       | Created: example/tool.go
-    README.md     | Created: example/README.md
-    +files        | Stack: [example, files]
-    +documents    | Stack: [example, files, documents]
-    #+page.svelte | Created: example/files/documents/+page.svelte
-    -             | Stack: [example, files]
-    +projects     | Stack: [example, files, projects]
-    +go           | Stack: [example, files, projects, go]
-    main.go       | Created: example/files/projects/go/main.go
-    README.md     | Created: example/files/projects/go/README.md
-    --            | Stack: [example, files]
-    output.txt    | Created: example/files/output.txt
-```
-
-### Running commands
-
-Folder structure:
-
-```txt
-example/
-├── go.mod
-└── main.go
-```
-
-To create it we use the following command:
-
-```sh
-mk +example %'go mod init example.com/example' main.go
-```
-
-```txt
-mk
-    +example                           | Stack: [example]
-    %'go mod init example.com/example' | Run command: "sh -c 'go mod init example.com/example'" at example/
-    main.go                            | Created: example/main.go
+    example/      | create a new folder called example/
+    tool.go       | create a new file called tool.go inside example/
+    README.md     | create a new file called README.md inside example/
+    files/        | create a new folder called files/
+    documents/    | create a new folder called documents/ inside files/
+    +page.svelte  | create a new file called +page.svelte inside documents/
+    ..            | return one directory in the stack
+    projects/     | create a new folder called projects/ inside documents/
+    go/           | create a new folder called go/ inside projects/
+    main.go       | create a new file called main.go inside go/
+    README.md     | create a new file called README.md inside go/
+    ...           | return two directories in the stack
+    output.txt    | create a new file called output.txt inside go/
 ```
 
 ## License
