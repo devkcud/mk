@@ -15,7 +15,7 @@ var Version string
 
 func main() {
 	showHelp := flag.Bool("help", false, "Show help menu")
-	quiet := flag.Bool("quiet", true, "Disable output")
+	quiet := flag.Bool("quiet", false, "Disable output")
 	flag.Parse()
 
 	if *showHelp || flag.NArg() == 0 {
@@ -49,7 +49,8 @@ func main() {
 		dir, file := path.Split(name)
 
 		if dir != "" {
-			dirstack = append(dirstack, dir)
+			separated_dirs := strings.Split(dir, "/")
+			dirstack = append(dirstack, separated_dirs[:len(separated_dirs)-1]...)
 			utils.CreateDir(path.Join(dirstack...))
 		}
 
