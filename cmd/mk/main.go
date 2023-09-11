@@ -40,19 +40,15 @@ func main() {
 			continue
 		}
 
-		if name[len(name)-1] == '/' {
-			dirstack = append(dirstack, name)
-			utils.CreateDir(path.Join(dirstack...))
-
-			continue
-		}
-
 		dir, file := path.Split(name)
 
 		if dir != "" {
-			utils.CreateDir(path.Join(append(dirstack, dir)...))
+			dirstack = append(dirstack, dir)
+			utils.CreateDir(path.Join(dirstack...))
 		}
 
-		utils.CreateFile(path.Join(append(dirstack, file)...))
+		if file != "" {
+			utils.CreateFile(path.Join(append(dirstack, file)...))
+		}
 	}
 }
