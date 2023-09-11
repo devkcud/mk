@@ -49,7 +49,20 @@ func main() {
 		// TODO: Redo commands again
 		// utils.ExecCommand(path.Join(dirstack...), name[1:])
 		default:
-			utils.CreateFile(path.Join(append(dirstack, strings.Replace(name, "#", "", 1))...))
+			if name[len(name)-1] == '/' {
+				dirstack = append(dirstack, name)
+				utils.CreateDir(path.Join(dirstack...))
+				break
+			}
+
+			dir, file := path.Split(name)
+
+			if dir != "" {
+				dirstack = append(dirstack, dir)
+				utils.CreateDir(path.Join(dirstack...))
+			}
+
+			utils.CreateFile(path.Join(append(dirstack, file)...))
 		}
 	}
 }
