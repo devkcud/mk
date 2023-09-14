@@ -1,6 +1,6 @@
 # Maintainer ????? <???@??.??>
 pkgname=mk
-pkgver=1.2.0
+pkgver=1.3.0
 pkgrel=1
 pkgdesc="Simply make files & directories"
 arch=('x86_64')
