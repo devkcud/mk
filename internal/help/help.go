@@ -13,7 +13,7 @@ Examples:
     mk src/main.js
     mk tests/
     mk lib/ myclass.go otherclass.go andanotherclass.go
-    mk src/main.cpp .. Makefile
+    mk src/main.cpp Makefile
 
 Issues/PRs/Help: https://github.com/devkcud/mk`)
 }

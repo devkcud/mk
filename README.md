@@ -84,6 +84,31 @@ mk
     output.txt    | create a new file called output.txt inside go/
 ```
 
+### Example 3
+
+Folder structure:
+
+```txt
+example/
+├── documents/
+│   └── README.md
+└── projects/
+    └── README.md
+```
+
+To create it we use the following command:
+
+```sh
+mk example/ documents/README.md projects/README.md
+```
+
+```txt
+mk
+    example/            | create a new folder called example/
+    documents/README.md | create a new file (within a folder called documents/) called README.md inside example/
+    projects/README.md  | create a new file (within a folder called projects/) called README.md inside example/
+```
+
 ## License
 
 [This project is under the The Unlicense license](LICENSE)
