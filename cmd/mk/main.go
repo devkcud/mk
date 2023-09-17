@@ -48,6 +48,15 @@ func main() {
 
 		dir, file := path.Split(name)
 
+		if dir != "" && file != "" {
+			temp := append(dirstack, dir)
+
+			utils.CreateDir(path.Join(temp...))
+			utils.CreateFile(path.Join(append(temp, file)...))
+
+			continue
+		}
+
 		if dir != "" {
 			separated_dirs := strings.Split(dir, "/")
 			dirstack = append(dirstack, separated_dirs[:len(separated_dirs)-1]...)
