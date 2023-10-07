@@ -2,9 +2,8 @@ package main
 
 import (
 	"flag"
-	"fmt"
 	"os"
-	"path"
+	"path/filepath"
 	"strings"
 
 	"github.com/devkcud/mk/internal/help"
@@ -14,14 +13,16 @@ import (
 var Version string
 
 func main() {
+	flag.Usage = func() { help.ShowHelp(Version) }
+
 	showHelp := flag.Bool("help", false, "Show help menu")
 	quiet := flag.Bool("quiet", false, "Disable output")
+
 	flag.Parse()
 
 	if *showHelp || flag.NArg() == 0 {
-		fmt.Printf("mk (%s) - by: devkcud\n", Version)
+		flag.Usage()
 
-		help.ShowHelp()
 		return
 	}
 
@@ -46,13 +47,13 @@ func main() {
 			continue
 		}
 
-		dir, file := path.Split(name)
+		dir, file := filepath.Split(name)
 
 		if dir != "" && file != "" {
 			temp := append(dirstack, dir)
 
-			utils.CreateDir(path.Join(temp...))
-			utils.CreateFile(path.Join(append(temp, file)...))
+			utils.CreateDir(filepath.Join(temp...))
+			utils.CreateFile(filepath.Join(append(temp, file)...))
 
 			continue
 		}
@@ -60,11 +61,11 @@ func main() {
 		if dir != "" {
 			separated_dirs := strings.Split(dir, "/")
 			dirstack = append(dirstack, separated_dirs[:len(separated_dirs)-1]...)
-			utils.CreateDir(path.Join(dirstack...))
+			utils.CreateDir(filepath.Join(dirstack...))
 		}
 
 		if file != "" {
-			utils.CreateFile(path.Join(append(dirstack, file)...))
+			utils.CreateFile(filepath.Join(append(dirstack, file)...))
 		}
 	}
 }
