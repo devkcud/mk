@@ -19,6 +19,7 @@ func main() {
 	flagHelp := flag.BoolP("help", "h", false, "Show help menu")
 	flagVersion := flag.BoolP("version", "V", false, "Show version")
 	flagQuiet := flag.BoolP("quiet", "q", false, "Disable output")
+	flagPrompt := flag.Bool("prompt", false, "Prompt every time a folder/file is about to be created")
 
 	flag.Parse()
 
@@ -58,6 +59,10 @@ func main() {
 		if dir != "" && file != "" {
 			temp := append(dirstack, dir)
 
+			if *flagPrompt && !utils.YesNoPrompt("Create path "+filepath.Join(append(temp, file)...)+"?", true) {
+				continue
+			}
+
 			utils.CreateDir(filepath.Join(temp...))
 			utils.CreateFile(filepath.Join(append(temp, file)...))
 
@@ -66,11 +71,20 @@ func main() {
 
 		if dir != "" {
 			separated_dirs := strings.Split(dir, "/")
+
+			if *flagPrompt && !utils.YesNoPrompt("Create folder "+filepath.Join(append(dirstack, separated_dirs[:len(separated_dirs)-1]...)...)+"?", true) {
+				continue
+			}
+
 			dirstack = append(dirstack, separated_dirs[:len(separated_dirs)-1]...)
 			utils.CreateDir(filepath.Join(dirstack...))
 		}
 
 		if file != "" {
+			if *flagPrompt && !utils.YesNoPrompt("Create file "+filepath.Join(append(dirstack, file)...)+"?", true) {
+				continue
+			}
+
 			utils.CreateFile(filepath.Join(append(dirstack, file)...))
 		}
 	}
