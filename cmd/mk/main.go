@@ -2,6 +2,7 @@ package main
 
 import (
 	"flag"
+	"fmt"
 	"os"
 	"path/filepath"
 	"strings"
@@ -16,13 +17,18 @@ func main() {
 	flag.Usage = func() { help.ShowHelp(Version) }
 
 	showHelp := flag.Bool("help", false, "Show help menu")
+	showVersion := flag.Bool("version", false, "Show version")
 	quiet := flag.Bool("quiet", false, "Disable output")
 
 	flag.Parse()
 
+	if *showVersion {
+		fmt.Printf("mk %s\n", Version)
+		return
+	}
+
 	if *showHelp || flag.NArg() == 0 {
 		flag.Usage()
-
 		return
 	}
 
