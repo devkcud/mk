@@ -8,7 +8,7 @@ where `<folder>` represents the directory name. The `..` syntax is used to remov
 the last added directory from the directory stack. You can create empty files by
 providing filenames, optionally nested within added directories. **mk** mantains
 a directory stack to facilitate creating nested directories and files.
-[View example](#examples).
+[View examples](#examples).
 
 > Tested on Linux (idk if it works on Windows and Mac)
 
@@ -25,7 +25,7 @@ View [BUILD.md](BUILD.md)
 - `folder/`: Creates a directory and add it to the directory stack.
 - `files...`: Creates files inside the directory stack.
 
-## Example
+## Examples
 
 ### Example 1
 
