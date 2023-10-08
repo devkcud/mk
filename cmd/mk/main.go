@@ -1,7 +1,6 @@
 package main
 
 import (
-	"flag"
 	"fmt"
 	"os"
 	"path/filepath"
@@ -9,6 +8,7 @@ import (
 
 	"github.com/devkcud/mk/internal/help"
 	"github.com/devkcud/mk/internal/utils"
+	flag "github.com/spf13/pflag"
 )
 
 var Version string
@@ -16,26 +16,31 @@ var Version string
 func main() {
 	flag.Usage = func() { help.ShowHelp(Version) }
 
-	showHelp := flag.Bool("help", false, "Show help menu")
-	showVersion := flag.Bool("version", false, "Show version")
-	quiet := flag.Bool("quiet", false, "Disable output")
+	flagHelp := flag.BoolP("help", "h", false, "Show help menu")
+	flagVersion := flag.BoolP("version", "V", false, "Show version")
+	flagQuiet := flag.BoolP("quiet", "q", false, "Disable output")
 
 	flag.Parse()
 
-	if *showVersion {
+	if *flagQuiet {
+		// os.Stdin = nil
+		os.Stdout = nil
+		os.Stderr = nil
+	}
+
+	if *flagVersion {
 		fmt.Printf("mk %s\n", Version)
 		return
 	}
 
-	if *showHelp || flag.NArg() == 0 {
+	if *flagHelp {
 		flag.Usage()
 		return
 	}
 
-	if *quiet {
-		// os.Stdin = nil
-		os.Stdout = nil
-		os.Stderr = nil
+	if flag.NArg() == 0 {
+		flag.Usage()
+		return
 	}
 
 	var dirstack []string
