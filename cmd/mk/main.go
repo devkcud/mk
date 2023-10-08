@@ -33,12 +33,7 @@ func main() {
 		return
 	}
 
-	if *flagHelp {
-		flag.Usage()
-		return
-	}
-
-	if flag.NArg() == 0 {
+	if *flagHelp || flag.NArg() == 0 {
 		flag.Usage()
 		return
 	}
