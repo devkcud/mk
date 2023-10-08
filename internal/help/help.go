@@ -1,8 +1,9 @@
 package help
 
 import (
-	"flag"
 	"fmt"
+
+	"github.com/spf13/pflag"
 )
 
 var examples []string = []string{"src/main.js", "tests/", "lib/ myclass.go otherclass.go andanotherclass.go", "src/main.cpp Makefile"}
@@ -12,7 +13,7 @@ func ShowHelp(version string) {
 
 	fmt.Printf("Usage: mk [-flags] [..] [folder/] [files...]\n\nFlags:\n")
 
-	flag.PrintDefaults()
+	pflag.PrintDefaults()
 
 	fmt.Println("\nExamples:")
 
