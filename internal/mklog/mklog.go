@@ -8,7 +8,7 @@ import (
 	"golang.org/x/exp/slices"
 )
 
-var LogLevel []string = []string{"all"}
+var LogLevel []string = []string{"error"}
 
 func Log(o ...any) {
 	if !slices.Contains(LogLevel, "info") && !slices.Contains(LogLevel, "all") {
