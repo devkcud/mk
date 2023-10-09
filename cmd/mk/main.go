@@ -24,7 +24,11 @@ func main() {
 	flag.Parse()
 
 	if *flagQuiet {
-		// os.Stdin = nil
+		if *flagPrompt {
+			fmt.Println("WARNING: --prompt and --quiet are incompatible; skipping --prompt")
+		}
+
+		os.Stdin = nil
 		os.Stdout = nil
 		os.Stderr = nil
 	}
