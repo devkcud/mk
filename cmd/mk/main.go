@@ -19,7 +19,7 @@ func main() {
 	flagHelp := flag.BoolP("help", "h", false, "Show help menu")
 	flagVersion := flag.BoolP("version", "V", false, "Show version")
 	flagQuiet := flag.BoolP("quiet", "q", false, "Disable output")
-	flagPrompt := flag.Bool("prompt", false, "Prompt every time a folder/file is about to be created")
+	flagPrompt := flag.Bool("prompt", false, "Ask to create file/folder")
 
 	flag.Parse()
 
