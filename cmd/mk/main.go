@@ -60,6 +60,7 @@ func main() {
 			temp := append(dirstack, dir)
 
 			if *flagPrompt && !utils.YesNoPrompt("Create path "+filepath.Join(append(temp, file)...)+"?", true) {
+				fmt.Println("SKIP(path): " + filepath.Join(append(temp, file)...))
 				continue
 			}
 
@@ -73,6 +74,8 @@ func main() {
 			separated_dirs := strings.Split(dir, "/")
 
 			if *flagPrompt && !utils.YesNoPrompt("Create folder "+filepath.Join(append(dirstack, separated_dirs[:len(separated_dirs)-1]...)...)+"?", true) {
+				fmt.Println("SKIP(folder):", filepath.Join(append(dirstack, separated_dirs[:len(separated_dirs)-1]...)...))
+				fmt.Println("WARNING:", filepath.Join(append(dirstack, separated_dirs[:len(separated_dirs)-1]...)...), "not added to the dirstack")
 				continue
 			}
 
@@ -82,6 +85,7 @@ func main() {
 
 		if file != "" {
 			if *flagPrompt && !utils.YesNoPrompt("Create file "+filepath.Join(append(dirstack, file)...)+"?", true) {
+				fmt.Println("SKIP(file): " + filepath.Join(append(dirstack, file)...))
 				continue
 			}
 
