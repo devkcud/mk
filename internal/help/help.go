@@ -11,7 +11,7 @@ var examples []string = []string{"src/main.js", "tests/", "lib/ myclass.go other
 func ShowHelp(version string) {
 	fmt.Printf("mk (%s) - by: devkcud\n", version)
 
-	fmt.Printf("Usage: mk [-flags] [..] [folder/] [files...]\n\nFlags:\n")
+	fmt.Printf("Usage: mk [-flags] [..] [directory/] [files...]\n\nFlags:\n")
 
 	pflag.PrintDefaults()
 

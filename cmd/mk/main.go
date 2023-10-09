@@ -21,7 +21,7 @@ func main() {
 	flagHelp := flag.BoolP("help", "h", false, "Show help menu")
 	flagVersion := flag.BoolP("version", "V", false, "Show version")
 	flagQuiet := flag.BoolP("quiet", "q", false, "Disable output")
-	flagPrompt := flag.Bool("prompt", false, "Ask to create file/folder")
+	flagPrompt := flag.Bool("prompt", false, "Ask to create file/directory")
 
 	flag.Parse()
 
@@ -87,7 +87,7 @@ func main() {
 		if dir != "" {
 			separated_dirs := strings.Split(dir, "/")
 
-			if *flagPrompt && !utils.YesNoPrompt("Create folder "+filepath.Join(append(dirstack, separated_dirs[:len(separated_dirs)-1]...)...)+"?", true) {
+			if *flagPrompt && !utils.YesNoPrompt("Create directory "+filepath.Join(append(dirstack, separated_dirs[:len(separated_dirs)-1]...)...)+"?", true) {
 				mklog.Log("Skipping directory", color.MagentaString(filepath.Join(append(dirstack, separated_dirs[:len(separated_dirs)-1]...)...)))
 				mklog.Warn(color.MagentaString(filepath.Join(append(dirstack, separated_dirs[:len(separated_dirs)-1]...)...)), "not added to the dirstack")
 				continue
