@@ -7,7 +7,9 @@ import (
 	"strings"
 
 	"github.com/devkcud/mk/internal/help"
+	"github.com/devkcud/mk/internal/mklog"
 	"github.com/devkcud/mk/internal/utils"
+	"github.com/fatih/color"
 	flag "github.com/spf13/pflag"
 )
 
@@ -25,7 +27,7 @@ func main() {
 
 	if *flagQuiet {
 		if *flagPrompt {
-			fmt.Println("WARNING: --prompt and --quiet are incompatible; skipping --prompt")
+			mklog.Warn("--prompt and --quiet are incompatible; skipping --prompt")
 		}
 
 		os.Stdin = nil
@@ -34,7 +36,7 @@ func main() {
 	}
 
 	if *flagVersion {
-		fmt.Printf("mk %s\n", Version)
+		mklog.Print("mk", Version)
 		return
 	}
 
@@ -55,6 +57,14 @@ func main() {
 				dirstack = dirstack[:len(dirstack)-dots]
 			}
 
+			quantSay := "directory"
+
+			if dots > 1 {
+				quantSay = "directories"
+			}
+
+			mklog.Log("Going", color.MagentaString(fmt.Sprint(dots)), quantSay, "back (dirstack)")
+
 			continue
 		}
 
@@ -64,7 +74,7 @@ func main() {
 			temp := append(dirstack, dir)
 
 			if *flagPrompt && !utils.YesNoPrompt("Create path "+filepath.Join(append(temp, file)...)+"?", true) {
-				fmt.Println("SKIP(path): " + filepath.Join(append(temp, file)...))
+				mklog.Log("Skipping path", color.MagentaString(filepath.Join(append(temp, file)...)))
 				continue
 			}
 
@@ -78,8 +88,8 @@ func main() {
 			separated_dirs := strings.Split(dir, "/")
 
 			if *flagPrompt && !utils.YesNoPrompt("Create folder "+filepath.Join(append(dirstack, separated_dirs[:len(separated_dirs)-1]...)...)+"?", true) {
-				fmt.Println("SKIP(folder):", filepath.Join(append(dirstack, separated_dirs[:len(separated_dirs)-1]...)...))
-				fmt.Println("WARNING:", filepath.Join(append(dirstack, separated_dirs[:len(separated_dirs)-1]...)...), "not added to the dirstack")
+				mklog.Log("Skipping directory", color.MagentaString(filepath.Join(append(dirstack, separated_dirs[:len(separated_dirs)-1]...)...)))
+				mklog.Warn(color.MagentaString(filepath.Join(append(dirstack, separated_dirs[:len(separated_dirs)-1]...)...)), "not added to the dirstack")
 				continue
 			}
 
@@ -89,7 +99,7 @@ func main() {
 
 		if file != "" {
 			if *flagPrompt && !utils.YesNoPrompt("Create file "+filepath.Join(append(dirstack, file)...)+"?", true) {
-				fmt.Println("SKIP(file): " + filepath.Join(append(dirstack, file)...))
+				mklog.Log("Skipping file", color.MagentaString(filepath.Join(append(dirstack, file)...)))
 				continue
 			}
 
