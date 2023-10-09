@@ -3,48 +3,35 @@ package mklog
 import (
 	"fmt"
 	"os"
-	"strings"
 
 	"github.com/fatih/color"
 )
 
-func Log(o ...string) {
-	output := date()
-
+func Log(o ...any) {
 	custom := color.New(color.FgGreen, color.Bold)
-	output += custom.Sprint("    INFO ") + strings.Join(o, " ")
-
-	fmt.Println(output)
+	fmt.Printf("%s     %s ", date(), custom.Sprint("LOG"))
+	Print(o...)
 }
 
-func Warn(o ...string) {
-	output := date()
-
+func Warn(o ...any) {
 	custom := color.New(color.FgYellow, color.Bold)
-	output += custom.Sprint(" WARNING ") + strings.Join(o, " ")
-
-	fmt.Println(output)
+	fmt.Printf("%s %s ", date(), custom.Sprint("WARNING"))
+	Print(o...)
 }
 
-func Error(o ...string) {
-	output := date()
-
+func Error(o ...any) {
 	custom := color.New(color.FgRed, color.Bold)
-	output += custom.Sprint("   ERROR ") + strings.Join(o, " ")
-
-	fmt.Println(output)
+	fmt.Printf("%s   %s ", date(), custom.Sprint("ERROR"))
+	Print(o...)
 }
 
-func Fatal(o ...string) {
-	output := date()
-
-	custom := color.New(color.FgWhite, color.BgRed, color.Bold)
-	output += "   " + custom.Sprint("FATAL") + " " + strings.Join(o, " ")
-
-	fmt.Println(output)
+func Fatal(o ...any) {
+	custom := color.New(color.FgWhite, color.Bold)
+	fmt.Printf("%s   %s ", date(), custom.Sprint("FATAL"))
+	Print(o...)
 	os.Exit(1)
 }
 
-func Print(o ...string) {
-	fmt.Println(strings.Join(o, " "))
+func Print(o ...any) {
+	fmt.Println(o...)
 }
