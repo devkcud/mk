@@ -9,7 +9,7 @@ import (
 
 func CreateDir(path string) {
 	if _, err := os.Stat(path); err == nil {
-		mklog.Error("Folder already exists:", color.MagentaString(path))
+		mklog.Error("Directory already exists:", color.MagentaString(path))
 		return
 	}
 
