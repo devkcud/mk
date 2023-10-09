@@ -23,15 +23,9 @@ func main() {
 	flagQuiet := flag.BoolP("quiet", "q", false, "Disable output")
 	flagPrompt := flag.Bool("prompt", false, "Ask to create file/directory")
 	flagNoColor := flag.Bool("nocolor", false, "Disable colors in output (logging)")
-	flagLogLevel := flag.StringArrayP("loglevel", "l", []string{"error"}, "Set log level (all, info, warn, error)")
+    flagLogLevel := flag.IntP("loglevel", "l", 0, "Set log level (0: none, 1: info, 2: warn, 3: error, 4: all)")
 
 	flag.Parse()
-
-	for _, loglevel := range *flagLogLevel {
-		if loglevel != "all" && loglevel != "info" && loglevel != "warn" && loglevel != "error" {
-			mklog.Fatal("Invalid log level", color.RedString(loglevel))
-		}
-	}
 
 	mklog.LogLevel = *flagLogLevel
 
