@@ -20,4 +20,7 @@ clean:
 install: build
 	cp $(BUILD_DIR)/$(COMPILE_NAME) ${HOME}/.local/bin/$(BIN_NAME)
 
+uninstall:
+	rm ${HOME}/.local/bin/$(BIN_NAME)
+
 .PHONY: build clean install
