@@ -8,8 +8,14 @@ import (
 )
 
 func CreateDir(path string) {
+	if _, err := os.Stat(path); err == nil {
+		mklog.Error("Folder already exists:", color.MagentaString(path))
+		return
+	}
+
 	if os.MkdirAll(path, 0755) != nil {
 		mklog.Error("Couldn't create directory:", color.MagentaString(path))
+		return
 	}
 
 	mklog.Log("Created directory:", color.MagentaString(path))
@@ -17,9 +23,13 @@ func CreateDir(path string) {
 
 func CreateFile(path string) {
 	if _, err := os.Stat(path); err == nil {
-		mklog.Error("Path already exists:", color.MagentaString(path))
-	} else if os.WriteFile(path, []byte{}, 0644) != nil {
+		mklog.Error("File already exists:", color.MagentaString(path))
+		return
+	}
+
+	if os.WriteFile(path, []byte{}, 0644) != nil {
 		mklog.Error("Couldn't create file:", color.MagentaString(path))
+		return
 	}
 
 	mklog.Log("Created file:", color.MagentaString(path))
