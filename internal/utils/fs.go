@@ -14,8 +14,7 @@ func CreateDir(path string) {
 	}
 
 	if os.MkdirAll(path, 0755) != nil {
-		mklog.Error("Couldn't create directory:", color.MagentaString(path))
-		return
+		mklog.Fatal("Couldn't create directory:", color.MagentaString(path))
 	}
 
 	mklog.Log("Created directory:", color.MagentaString(path))
@@ -28,8 +27,7 @@ func CreateFile(path string) {
 	}
 
 	if os.WriteFile(path, []byte{}, 0644) != nil {
-		mklog.Error("Couldn't create file:", color.MagentaString(path))
-		return
+		mklog.Fatal("Couldn't create file:", color.MagentaString(path))
 	}
 
 	mklog.Log("Created file:", color.MagentaString(path))
