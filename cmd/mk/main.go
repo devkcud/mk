@@ -22,8 +22,13 @@ func main() {
 	flagVersion := flag.BoolP("version", "V", false, "Show version")
 	flagQuiet := flag.BoolP("quiet", "q", false, "Disable output")
 	flagPrompt := flag.Bool("prompt", false, "Ask to create file/directory")
+	flagNoColor := flag.Bool("nocolor", false, "Disable colors in output (logging)")
 
 	flag.Parse()
+
+	if *flagNoColor {
+		os.Setenv("NO_COLOR", "1")
+	}
 
 	if *flagQuiet {
 		if *flagPrompt {
