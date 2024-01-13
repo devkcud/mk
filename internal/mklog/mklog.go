@@ -7,10 +7,10 @@ import (
 	"github.com/fatih/color"
 )
 
-var LogLevel int = 3
+var LogLevel int
 
 func Log(o ...any) {
-	if LogLevel >= 1 {
+	if LogLevel >= 3 {
 		custom := color.New(color.FgGreen, color.Bold)
 		fmt.Printf("%s     %s ", date(), custom.Sprint("LOG"))
 		Print(o...)
@@ -26,7 +26,7 @@ func Warn(o ...any) {
 }
 
 func Error(o ...any) {
-	if LogLevel >= 3 {
+	if LogLevel >= 1 {
 		custom := color.New(color.FgRed, color.Bold)
 		fmt.Printf("%s   %s ", date(), custom.Sprint("ERROR"))
 		Print(o...)
