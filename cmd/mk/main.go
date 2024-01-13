@@ -23,11 +23,24 @@ func main() {
 	flagQuiet := flag.BoolP("quiet", "q", false, "Disable output")
 	flagPrompt := flag.Bool("prompt", false, "Ask to create file/directory")
 	flagNoColor := flag.Bool("nocolor", false, "Disable colors in output (logging)")
-    flagLogLevel := flag.IntP("loglevel", "l", 0, "Set log level (0: none, 1: info, 2: warn, 3: error, 4: all)")
+	flagLogLevel := flag.IntP("loglevel", "l", 0, "Set log level (0: none, 1: info, 2: warn, 3: error, 4: all)")
+	flagPreview := flag.BoolP("preview", "p", false, "Preview mode (show what would be created)")
 
 	flag.Parse()
 
 	mklog.LogLevel = *flagLogLevel
+	previewFolder := filepath.Join(os.TempDir(), fmt.Sprintf("mk-preview-%d", os.Getpid()))
+	previousWd, _ := os.Getwd()
+
+	if *flagPreview {
+		if _, err := os.Stat(previewFolder); os.IsNotExist(err) {
+			utils.CreateDir(previewFolder)
+		} else {
+			os.RemoveAll(previewFolder)
+		}
+
+		os.Chdir(previewFolder)
+	}
 
 	if *flagNoColor {
 		os.Setenv("NO_COLOR", "1")
@@ -112,6 +125,15 @@ func main() {
 			}
 
 			utils.CreateFile(filepath.Join(append(dirstack, file)...))
+		}
+	}
+
+	if *flagPreview {
+		utils.BuildTree(previewFolder, "")
+
+		if utils.YesNoPrompt("Preview mode. Do you want to continue?", false) {
+			utils.CopyFolder(previewFolder, previousWd)
+			os.RemoveAll(previewFolder)
 		}
 	}
 }
