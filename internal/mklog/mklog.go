@@ -34,12 +34,10 @@ func Error(o ...any) {
 }
 
 func Fatal(o ...any) {
-	if LogLevel >= 3 {
-		custom := color.New(color.FgWhite, color.Bold)
-		fmt.Printf("%s   %s ", date(), custom.Sprint("FATAL"))
-		Print(o...)
-		os.Exit(1)
-	}
+	custom := color.New(color.FgWhite, color.Bold)
+	fmt.Printf("%s   %s ", date(), custom.Sprint("FATAL"))
+	Print(o...)
+	os.Exit(1)
 }
 
 func Print(o ...any) {
