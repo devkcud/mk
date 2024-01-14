@@ -134,7 +134,8 @@ func main() {
 
 		if utils.YesNoPrompt("Preview mode. Do you want to continue?", false) {
 			utils.CopyFolder(previewFolder, previousWd)
-			os.RemoveAll(previewFolder)
 		}
+
+		os.RemoveAll(previewFolder)
 	}
 }
