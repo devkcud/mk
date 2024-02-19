@@ -116,6 +116,7 @@ func main() {
 			}
 
 			if strings.HasPrefix(dir, "/") {
+				dirstack = nil
 				dirstack = append(dirstack, "/")
 			}
 
