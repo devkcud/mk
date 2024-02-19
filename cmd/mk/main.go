@@ -115,6 +115,10 @@ func main() {
 				continue
 			}
 
+			if strings.HasPrefix(dir, "/") {
+				dirstack = append(dirstack, "/")
+			}
+
 			dirstack = append(dirstack, separated_dirs[:len(separated_dirs)-1]...)
 			utils.CreateDir(filepath.Join(dirstack...))
 		}
